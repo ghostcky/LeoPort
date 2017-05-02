@@ -22,14 +22,16 @@ public class ApiClient {
     private static final String API_URL = "http://api.lingualeo.com/";
     private final String login;
     private final String password;
+    private final Boolean isTooltip;
     private boolean isAuthed = false;
     private final Gson gson = new GsonBuilder().create();
     private static final Logger logger = Logger.getLogger(ApiClient.class.getName());
 
-    public ApiClient(String login, String password) {
+    public ApiClient(String login, String password, Boolean isTooltip) {
         this.login = login;
         this.password = password;
         CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
+        this.isTooltip = isTooltip;
     }
 
     public void auth() throws AuthenticationException {
@@ -89,16 +91,16 @@ public class ApiClient {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setInstanceFollowRedirects(false);
-        conn.setRequestProperty("charset", "utf-8");
+        conn.setRequestProperty("Accept-Charset", "UTF-8");
         conn.setUseCaches(false);
 
         if ("POST".equals(method)) {
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
         }
 
         if (urlParameters != null) {
-            conn.getOutputStream().write(urlParameters.getBytes());
+            conn.getOutputStream().write(urlParameters.getBytes("UTF-8"));
         }
 
         return conn;
@@ -130,5 +132,9 @@ public class ApiClient {
         if (!this.isAuthed) {
             throw new AuthenticationException("User doesn't have credentials.");
         }
+    }
+
+    public Boolean getTooltip() {
+        return isTooltip;
     }
 }

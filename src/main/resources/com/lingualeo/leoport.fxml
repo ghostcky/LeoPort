@@ -14,9 +14,7 @@
 
     <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true"
                GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="5">
-        <image>
-            <Image url="@images/leo.png"/>
-        </image>
+        <Image url="@images/leo.png"/>
     </ImageView>
 
     <TextField fx:id="emailField" promptText="email@lingualeo.com"
@@ -31,10 +29,15 @@
     </HBox>
 
     <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="TOP_CENTER">
-        <Button fx:id="startButton" text="Start" disable="true" onAction="#handleSubmitButtonAction"/>
+        <CheckBox fx:id="isTooltep" text="Enable translate tooltip" selected="true"/>
+        <CheckBox fx:id="enableLogger" text="Enable Log" onAction="#handleEnableLoggerAction"/>
     </HBox>
 
     <HBox GridPane.columnIndex="1" GridPane.rowIndex="4" alignment="TOP_CENTER">
+        <Button fx:id="startButton" text="Start" disable="true" onAction="#handleSubmitButtonAction"/>
+    </HBox>
+
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="5" alignment="TOP_CENTER" GridPane.columnSpan="2">
         <ProgressBar fx:id="progressBar" progress="0.0" visible="false">
             <effect>
                 <ColorAdjust hue="-0.50"/>
@@ -42,6 +45,15 @@
         </ProgressBar>
     </HBox>
 
-    <TextArea fx:id="textField" GridPane.columnIndex="0" editable="false" GridPane.rowIndex="5"
-              GridPane.columnSpan="2"/>
+    <HBox fx:id="tlBlock" GridPane.columnIndex="0" GridPane.rowIndex="6" alignment="TOP_CENTER" GridPane.columnSpan="2"
+          visible="false" managed="false">
+        <Label text="Перевод: "/><Label fx:id="word"/>
+    </HBox>
+
+    <HBox fx:id="translateBlock" GridPane.columnIndex="0" GridPane.rowIndex="7" alignment="TOP_CENTER"
+          GridPane.columnSpan="2" visible="false" managed="false">
+    </HBox>
+
+    <TextArea fx:id="textField" GridPane.columnIndex="0" editable="false" GridPane.rowIndex="8"
+              GridPane.columnSpan="2" visible="false" managed="false"/>
 </GridPane>

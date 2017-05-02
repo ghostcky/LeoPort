@@ -7,6 +7,7 @@ import com.lingualeo.reader.ReaderFactory;
 import com.lingualeo.reader.Word;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -14,6 +15,11 @@ import java.util.List;
 
 public class FormController {
     public PasswordField passwordField;
+    public CheckBox isTooltep;
+    public HBox translateBlock;
+    public HBox tlBlock;
+    public Label word;
+    public CheckBox enableLogger;
     public TextField emailField;
     public Button startButton;
     public TextArea textField;
@@ -25,7 +31,9 @@ public class FormController {
         Thread t = new Thread(
                 () -> {
                     String password = passwordField.getText();
-                    Importer importer = new Importer(words, new ApiClient(emailField.getText(), password), progressBar);
+                    Importer importer = new Importer(words,
+                            new ApiClient(emailField.getText(), password, isTooltep.isSelected()),
+                            progressBar, word, translateBlock, tlBlock);
                     startButton.setDisable(true);
                     importer.startImport();
                 }
@@ -46,5 +54,11 @@ public class FormController {
             words = reader.read();
             this.startButton.setDisable(false);
         }
+    }
+
+    @FXML
+    protected void handleEnableLoggerAction() {
+        this.textField.setVisible(this.enableLogger.isSelected());
+        this.textField.setManaged(this.enableLogger.isSelected());
     }
 }

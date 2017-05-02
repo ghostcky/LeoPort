@@ -23,15 +23,16 @@ public class LeoPort extends Application {
     public void start(Stage stage) throws Exception {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("leoport.fxml"));
-            Scene scene = new Scene(root, 420, 375);
+            Scene scene = new Scene(root, 420, 420);
             scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
             TextArea logArea = (TextArea) scene.lookup("#textField");
 
-            stage.setMaxHeight(420);
+            stage.setMaxHeight(550);
             stage.setMaxWidth(600);
             stage.setTitle("LeoPort");
             stage.setScene(scene);
             stage.show();
+            stage.setOnCloseRequest(we -> System.exit(0));
 
             LogManager.getLogManager().reset();
             Logger importLogger = Logger.getLogger(Importer.class.getName());
